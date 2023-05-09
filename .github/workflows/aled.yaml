@@ -4,6 +4,11 @@ on:
   repository_dispatch:
     types: [update-helm]
 
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
 jobs:
   update-version:
     runs-on: ubuntu-latest
@@ -20,3 +25,5 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Update Manifest for ${{ github.event.client_payload.path}} to v${{ github.event.client_payload.tag }}
+          tagging_message: 'v${{ github.event.client_payload.tag }}'
+          skip_checkout: true
