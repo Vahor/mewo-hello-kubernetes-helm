@@ -1,6 +1,8 @@
 name: "Update helm version"
 
-on: repository_dispatch
+on: 
+  repository_dispatch:
+    types: [update-helm]
 
 jobs:
   update-version:
