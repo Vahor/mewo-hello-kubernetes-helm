@@ -1,0 +1,20 @@
+name: "Update helm version"
+
+on: repository_dispatch
+
+jobs:
+  update-version:
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: update manifest
+        run: docker run --rm -v "${PWD}":/workdir mikefarah/yq yq write --inplace --verbose  ${{ github.event.client_payload.path}}/Chart.yml appVersion ${{ github.event.client_payload.tag }}
+
+      - name: Commit Changes
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Update Manifest for ${{ github.event.client_payload.path}} to v${{ github.event.client_payload.tag }}
