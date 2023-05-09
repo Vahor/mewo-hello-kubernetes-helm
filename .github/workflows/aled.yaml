@@ -19,7 +19,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: update manifest
-        run: docker run --rm -v "${PWD}":/workdir mikefarah/yq:3.2.1 yq write --inplace --verbose deploy/helm/${{ github.event.client_payload.path}}/Chart.yaml appVersion 1
+        run: docker run --rm -v "${PWD}":/workdir mikefarah/yq:3.2.1 yq write --inplace --verbose deploy/helm/${{ github.event.client_payload.path}}/Chart.yaml appVersion ${{ github.event.client_payload.tag }}
 
       - name: Commit Changes
         uses: stefanzweifel/git-auto-commit-action@v4
